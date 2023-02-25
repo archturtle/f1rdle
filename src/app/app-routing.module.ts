@@ -1,11 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {EasyPageComponent} from "./components/easy-page/easy-page.component";
-import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {MediumPageComponent} from "./components/medium-page/medium-page.component";
+import {HardPageComponent} from "./components/hard-page/hard-page.component";
 
 const routes: Routes = [
-  {path: 'easy', component: EasyPageComponent}
+  {path: '', redirectTo: '/', pathMatch: 'full'},
+  {path: 'easy', component: EasyPageComponent},
+  {path: 'medium', component: MediumPageComponent},
+  {path: 'hard', component: HardPageComponent},
+  {path: '**', redirectTo: '/', pathMatch: 'full'}
 ]
 
 @NgModule({
@@ -16,4 +20,5 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
