@@ -1,1 +1,40 @@
-<p>guesses works!</p>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Circuit Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let guess"> {{guess.position}} </td>
+    </ng-container>
+
+    <!-- Year Column -->
+    <ng-container matColumnDef="circuit">
+      <th mat-header-cell *matHeaderCellDef> Circuit </th>
+      <td mat-cell *matCellDef="let guess"> {{guess.circuit}} </td>
+    </ng-container>
+
+    <!-- Driver Column -->
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef> Year </th>
+      <td mat-cell *matCellDef="let guess"> {{guess.year}} </td>
+    </ng-container>
+
+    <!-- Word Count Column -->
+    <ng-container matColumnDef="driver">
+      <th mat-header-cell *matHeaderCellDef> Driver </th>
+      <td mat-cell *matCellDef="let guess"> {{guess.driver}} </td>
+    </ng-container>
+
+    <!-- DNFs Column -->
+    <ng-container matColumnDef="wordCount">
+        <th mat-header-cell *matHeaderCellDef> Word Count </th>
+        <td mat-cell *matCellDef="let guess"> {{guess.wordCount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dnfs">
+      <th mat-header-cell *matHeaderCellDef> DNFs </th>
+      <td mat-cell *matCellDef="let guess"> {{guess.dnfs}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>

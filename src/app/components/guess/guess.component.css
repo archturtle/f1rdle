@@ -1,0 +1,25 @@
+form {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+div {
+  justify-content: center;
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+  color: white;
+  margin-bottom: 0px;
+}
+
+input {
+  width: 128px;
+  justify-content: center;
+}
