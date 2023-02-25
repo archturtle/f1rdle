@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { GuessesComponent } from './components/guesses/guesses.component';
     GuessesComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule
   ],
   providers: [],
