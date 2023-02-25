@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatTableModule } from '@angular/material/table'
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -16,7 +17,8 @@ import { GuessesComponent } from './components/guesses/guesses.component';
     GuessesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
