@@ -11,6 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { GuessComponent } from './components/guess/guess.component';
 import { GuessesComponent } from './components/guesses/guesses.component';
+import { GameComponent } from './components/game/game.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -19,7 +20,7 @@ import { firstValueFrom } from 'rxjs';
 
 import {FormsModule} from "@angular/forms";
 import {ReactiveFormsModule} from "@angular/forms";
-import { GameComponent } from './components/game/game.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -37,10 +38,11 @@ import { GameComponent } from './components/game/game.component';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatSnackBarModule,
     MatTableModule,
     BrowserAnimationsModule,
     HttpClientModule,
-  ReactiveFormsModule
+    ReactiveFormsModule
   ],
   providers: [
     {

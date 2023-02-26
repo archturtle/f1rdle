@@ -9,7 +9,16 @@ import { Observable } from 'rxjs';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit{
+
+  /**
+   * The answer for the game.
+   */
   selectedCircuit!: Circuit;
+
+  /**
+   * Injects the circuit service.
+   * @param circuitService: the circuit service.
+   */
   constructor(private circuitService: CircuitsService) {}
 
   ngOnInit(): void {
