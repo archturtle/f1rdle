@@ -7,113 +7,148 @@ import * as latinize from "latinize";
 import {GuessesService} from "../../services/guesses.service";
 import {lastValueFrom} from "rxjs";
 
-
+/**
+ * The component to handle all input from the user when they are guessing.
+ */
 @Component({
   selector: 'app-guess',
   templateUrl: './guess.component.html',
   styleUrls: ['./guess.component.css']
 })
 export class GuessComponent implements OnInit {
-    circuits = this.circuitService.circuitCodes;
 
-    answer!: Circuit;
-    guessForm: FormGroup = this.formBuilder.group({ input: '' })
+  /**
+   * The map of circuit codes.
+   */
+  circuits = this.circuitService.circuitCodes;
 
-    constructor(private formBuilder: FormBuilder, private circuitService: CircuitsService, private guessService: GuessesService) { }
+  /**
+   * The answer to the game in circuit form.
+   */
+  answer!: Circuit;
 
-    ngOnInit(): void {
-      this.circuitService.selectedCircuit$
-        .subscribe(e => this.answer = e);
-    }
+  guessForm: FormGroup = this.formBuilder.group({input: ''})
 
-    computeNumberWon(results: CircuitResult[]): number {
-      return results.filter(item => item.position == item.positionText).length;
-    }
+  /**
+   * Injects the services CircuitsService, GuessesService and FormBuilder.
+   *
+   * @param formBuilder: The form builder, which binds the form in the template to the code.
+   * @param circuitService: The circuit service.
+   * @param guessService: The guess service.
+   */
+  constructor(private formBuilder: FormBuilder, private circuitService: CircuitsService, private guessService: GuessesService) {
+  }
 
-    onSubmit = async (): Promise<void> => {
-      let guess = this.guessForm.value['input']
-      guess = latinize(guess).toLowerCase();
-      // this.guessForm.reset();
+  /**
+   * When the component is initialized, it will subscribe to the circuit service and set the answer of the
+   * game to answer.
+   */
+  ngOnInit(): void {
+    this.circuitService.selectedCircuit$
+      .subscribe(e => this.answer = e);
+  }
 
-      let check = false;
-      for (let nameOfCircuit of this.circuits.keys()) {
-        if (nameOfCircuit == guess) {
-          check = true;
-        }
+  /**
+   * Computes the number of racers that completed the race.
+   *
+   * @param results: The number of racers that completed the race.
+   */
+  computeNumberWon(results: CircuitResult[]): number {
+    return results.filter(item => item.position == item.positionText).length;
+  }
+
+  /**
+   * Validates the user's input when the user input's a guess.
+   * If the guess is valid, then it will be added to the guess list and compute how close the guess was.
+   * Otherwise, the guess will be skipped over and the user will have to re-input.
+   */
+  onSubmit = async (): Promise<void> => {
+    let guess = this.guessForm.value['input']
+    guess = latinize(guess).toLowerCase();
+    this.guessForm.reset();
+
+    // checks that the guess is in the list of possible circuits
+    let check = false;
+    for (let nameOfCircuit of this.circuits.keys()) {
+      if (nameOfCircuit == guess) {
+        check = true;
       }
-      if (!check) return;
-      if (this.guessService.hasCircuit(guess)) return;
+    }
+    if (!check) return;
+    if (this.guessService.hasCircuit(guess)) return;
 
-      let season = this.answer.season;
-      let val: Circuit | null = await lastValueFrom(
+    // Ensures that the season is correct based on what is inputted
+    // Miami needs to be hardcoded because there is only one year that it has been used.
+    let season = this.answer.season;
+    let val: Circuit | null = await lastValueFrom(
+      this.circuitService.getCircuitByCode$(
+        this.circuits.get(guess)!,
+        (guess == "Miami International Autodrome".toLowerCase()) ? 2022 : season
+      )
+    );
+
+    // Gets the Circuit of the name inputted for the guess, if the circuit does not exist for the
+    // year that the answer exists, then it will choose a random year that it did exist.
+    while (val == null) {
+      val = await lastValueFrom(
         this.circuitService.getCircuitByCode$(
           this.circuits.get(guess)!,
-          (guess == "Miami International Autodrome".toLowerCase()) ? 2022 : season
+          1950 + Math.floor(Math.random() * 72)
         )
-      );
-      while (val == null) {
-        val = await lastValueFrom(
-          this.circuitService.getCircuitByCode$(
-            this.circuits.get(guess)!,
-            1950 + Math.floor(Math.random() * 72)
-          )
-        )
-      }
+      )
+    }
 
-      console.log(val);
+    // Sets up & processes the guess and circuit data
+    let yearDiff: string;
+    let yearDiffS: string;
+    let wordCountG: string;
+    let wordCountGS: string;
+    let finishCarDiff: string;
+    let finishCarDiffS: string;
 
-      let yearDiff: string;
-      let yearDiffS: string;
-      let wordCountG: string;
-      let wordCountGS: string;
-      let finishCarDiff: string;
-      let finishCarDiffS: string;
-
-      if ((this.answer.season - val.season) > 0) {
-        yearDiff = val.season + " ↑";
-        yearDiffS = "HIGHER"
-      } else if (this.answer.season == val.season) {
-        yearDiff = val.season + "";
-        yearDiffS = "EQUAL"
-      } else {
-        yearDiff = val.season + " ↓";
-        yearDiffS = "HIGHER"
-      }
-
-
-      if ((this.answer.circuitName.split(' ').length - val.circuitName.split(' ').length) > 0) {
-        wordCountG = val.circuitName.split(' ').length.toString() + " ↑";
-        wordCountGS = "HIGHER";
-      } else if (this.answer.circuitName.split(' ').length == val.circuitName.split(' ').length) {
-        wordCountG = val.circuitName.split(' ').length.toString();
-        wordCountGS = "EQUAL";
-      } else {
-        wordCountG = val.circuitName.split(' ').length.toString() + " ↓";
-        wordCountGS = "LOWER";
-      }
-
-      if ((this.computeNumberWon(this.answer.results) - this.computeNumberWon(val.results)) > 0) {
-        finishCarDiff = this.computeNumberWon(val.results).toString() + " ↑";
-        finishCarDiffS = "HIGHER";
-      } else if (this.computeNumberWon(this.answer.results) == this.computeNumberWon(val.results)) {
-        finishCarDiff = this.computeNumberWon(val.results).toString();
-        finishCarDiffS = "EQUAL";
-      } else {
-        finishCarDiff = this.computeNumberWon(val.results).toString() + " ↓";
-        finishCarDiffS = "LOWER";
-      }
-
-
-      let guessCircuit: GuessResult = {
-        name: val.circuitName,
-        year: {result: yearDiff, status: yearDiffS},
-        driver: {result: val.results[0].driver.givenName + " " + val.results[0].driver.familyName, status: ""},
-        wordCount: {result: wordCountG, status: wordCountGS},
-        finishingCars: {result: finishCarDiff, status: finishCarDiffS}
-      };
-
-      this.guessService.addGuesses(guessCircuit);
+    if ((this.answer.season - val.season) > 0) {
+      yearDiff = val.season + " ↑";
+      yearDiffS = "HIGHER"
+    } else if (this.answer.season == val.season) {
+      yearDiff = val.season + "";
+      yearDiffS = "EQUAL"
+    } else {
+      yearDiff = val.season + " ↓";
+      yearDiffS = "HIGHER"
     }
 
 
+    if ((this.answer.circuitName.split(' ').length - val.circuitName.split(' ').length) > 0) {
+      wordCountG = val.circuitName.split(' ').length.toString() + " ↑";
+      wordCountGS = "HIGHER";
+    } else if (this.answer.circuitName.split(' ').length == val.circuitName.split(' ').length) {
+      wordCountG = val.circuitName.split(' ').length.toString();
+      wordCountGS = "EQUAL";
+    } else {
+      wordCountG = val.circuitName.split(' ').length.toString() + " ↓";
+      wordCountGS = "LOWER";
+    }
+
+    if ((this.computeNumberWon(this.answer.results) - this.computeNumberWon(val.results)) > 0) {
+      finishCarDiff = this.computeNumberWon(val.results).toString() + " ↑";
+      finishCarDiffS = "HIGHER";
+    } else if (this.computeNumberWon(this.answer.results) == this.computeNumberWon(val.results)) {
+      finishCarDiff = this.computeNumberWon(val.results).toString();
+      finishCarDiffS = "EQUAL";
+    } else {
+      finishCarDiff = this.computeNumberWon(val.results).toString() + " ↓";
+      finishCarDiffS = "LOWER";
+    }
+
+    // Creates the GuessResult and adds it to the guesses list
+    let guessCircuit: GuessResult = {
+      name: val.circuitName,
+      year: {result: yearDiff, status: yearDiffS},
+      driver: {result: val.results[0].driver.givenName + " " + val.results[0].driver.familyName, status: ""},
+      wordCount: {result: wordCountG, status: wordCountGS},
+      finishingCars: {result: finishCarDiff, status: finishCarDiffS}
+    };
+
+    this.guessService.addGuesses(guessCircuit);
+  }
 }
