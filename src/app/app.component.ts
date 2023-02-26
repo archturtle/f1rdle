@@ -12,5 +12,4 @@ import {CircuitsService} from './services/circuits.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = "f1rdle";
 }

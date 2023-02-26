@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, combineLatestWith, Observable, of, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Circuit } from '../interfaces/circuit';
-import * as latinize from "latinize";
 import { TwilioService } from 'src/app/services/twilio.service';
-import { TWILIO_TO_NUMBER } from 'src/app/twilio-config';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +36,7 @@ export class CircuitsService {
       .pipe(
         map((result: any): any[] => result["MRData"]["CircuitTable"]["Circuits"]),
         map((result: any) => result.map((r: any) => {
-          this._circuitCodes.set(latinize(r["circuitName"]).toLowerCase(), r["circuitId"]);
+          this._circuitCodes.set(r["circuitName"], r["circuitId"]);
         })),
       )
   }

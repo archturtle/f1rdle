@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {Circuit} from "../interfaces/circuit";
-import { GuessResult} from "../interfaces/guess";
+import { BehaviorSubject, Observable } from "rxjs";
+import { GuessResult } from "../interfaces/guess";
 
 @Injectable({
   providedIn: 'root'
