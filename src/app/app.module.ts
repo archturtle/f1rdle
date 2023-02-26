@@ -19,6 +19,7 @@ import { firstValueFrom } from 'rxjs';
 
 import {FormsModule} from "@angular/forms";
 import {ReactiveFormsModule} from "@angular/forms";
+import { GameComponent } from './components/game/game.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     StatisticsComponent,
     GuessComponent,
     GuessesComponent,
+    GameComponent,
   ],
   imports: [
     FormsModule,
