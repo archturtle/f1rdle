@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, combineLatestWith, Observable, of, ReplaySubject, retry } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatestWith, Observable, of, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Circuit } from '../interfaces/circuit';
 import * as latinize from "latinize";
