@@ -9,13 +9,9 @@ import { CircuitsService } from './services/circuits.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
   circuits$: Observable<Circuit[]> = this.circuitService.circuits$;
-  
   title = "f1rdle";
 
   constructor(private circuitService: CircuitsService) { }
-
-  ngOnInit(): void {
-  }
 }
