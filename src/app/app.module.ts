@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatTableModule } from '@angular/material/table'
+import { MatInputModule } from "@angular/material/input";
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -15,8 +16,6 @@ import { EasyPageComponent } from './components/easy-page/easy-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MediumPageComponent } from './components/medium-page/medium-page.component';
 import { HardPageComponent } from './components/hard-page/hard-page.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -32,13 +31,11 @@ import { MatInputModule } from "@angular/material/input";
   imports: [
     AppRoutingModule,
     BrowserModule,
-    MatFormFieldModule,
-    MatFormFieldModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatTableModule,
     BrowserAnimationsModule,
-    MatTableModule
     HttpClientModule,
   ],
   providers: [],
