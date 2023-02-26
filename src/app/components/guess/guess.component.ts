@@ -87,7 +87,7 @@ export class GuessComponent implements OnInit {
    */
   filter(val: string): string[] {
     return [...this.circuits.keys()].filter(name => {
-      return name.includes(val);
+      return name.toLowerCase().includes(val.toLowerCase());
     })
   }
 

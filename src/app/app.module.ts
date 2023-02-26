@@ -18,7 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CircuitsService } from 'src/app/services/circuits.service';
 import { firstValueFrom } from 'rxjs';
 
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AboutComponent } from 'src/app/components/about/about.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -34,19 +34,20 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     GameComponent,
     AboutComponent
   ],
-    imports: [
-        AppRoutingModule,
-        BrowserModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatButtonModule,
-        MatSnackBarModule,
-        MatTableModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        MatAutocompleteModule
-    ],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatAutocompleteModule,
+    BrowserAnimationsModule,
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,
