@@ -1,5 +1,5 @@
-<form class="example-form">
+<form class="example-form" [formGroup]="guessForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline">
-    <input matInput placeholder="Enter a Circuit Name" value="">
+    <input matInput placeholder="Enter a Circuit Name" value="" formControlName="input" />
   </mat-form-field>
 </form>

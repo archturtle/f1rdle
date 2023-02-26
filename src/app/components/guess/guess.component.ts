@@ -4,7 +4,6 @@ import {GuessResult} from "../../interfaces/guess";
 import {CircuitsService} from "../../services/circuits.service";
 import {Circuit, CircuitResult} from "../../interfaces/circuit";
 import * as latinize from "latinize";
-import {getCurrencySymbol} from "@angular/common";
 import {GuessesService} from "../../services/guesses.service";
 import {lastValueFrom} from "rxjs";
 
