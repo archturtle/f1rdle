@@ -1,4 +1,16 @@
-<button mat-flat-button disableRipple>SZN: 2022</button>
-<button mat-flat-button disableRipple>WIN: PER</button>
-<button mat-flat-button disableRipple>TNL: 03</button>
-<button mat-flat-button disableRipple>FIN: 17</button>
+<ng-container *ngIf="selectedCircuit">
+  <button mat-flat-button disableRipple>
+    SZN: {{ selectedCircuit.season }}
+  </button>
+  <button mat-flat-button disableRipple>
+    WIN: {{ selectedCircuit.results[0].driver.givenName + " " + selectedCircuit.results[0].driver.familyName }}
+  </button>
+  <button mat-flat-button disableRipple>
+    TNL: {{ selectedCircuit.circuitName.split(" ").length }}
+  </button>
+  <button mat-flat-button disableRipple>
+    FIN: {{ computeNumberWon(selectedCircuit.results) }}
+  </button>
+</ng-container>
+
+<p> {{ selectedCircuit | json }} </p>

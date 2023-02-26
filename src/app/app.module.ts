@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -16,6 +16,9 @@ import { EasyPageComponent } from './components/easy-page/easy-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MediumPageComponent } from './components/medium-page/medium-page.component';
 import { HardPageComponent } from './components/hard-page/hard-page.component';
+
+import { CircuitsService } from 'src/app/services/circuits.service';
+import { firstValueFrom } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,19 @@ import { HardPageComponent } from './components/hard-page/hard-page.component';
     BrowserAnimationsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: async (circuitsService: CircuitsService) => {
+        let seasonList = await firstValueFrom(circuitsService.getSeasons$());
+        let season = seasonList[Math.floor(Math.random() * seasonList.length)];
+
+        await firstValueFrom(circuitsService.getCircuits$(season));
+        await firstValueFrom(circuitsService.chooseRandomCircuit$())
+      },
+      deps: [CircuitsService]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

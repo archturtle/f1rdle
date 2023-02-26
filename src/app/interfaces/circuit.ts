@@ -4,9 +4,9 @@ import { Constructor } from 'src/app/interfaces/constructor';
 export interface Circuit {
   circuitId: string;
   circuitName: string;
-  season?: string;
+  season: number;
   location: Location;
-  results?: CircuitResult[];
+  results: CircuitResult[];
 }
 
 export interface Location {
@@ -16,11 +16,15 @@ export interface Location {
   country: string;
 }
 
+export interface Time {
+  millis: string;
+  time: string;
+}
+
 export interface CircuitResult {
   number: string;
   position: string;
   positionText: string;
-  points: string;
   driver: Driver;
   constructor: Constructor;
 }

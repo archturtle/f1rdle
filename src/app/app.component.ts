@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
 import { Circuit } from './interfaces/circuit';
 import { CircuitsService } from './services/circuits.service';
 
@@ -17,7 +17,5 @@ export class AppComponent implements OnInit {
   constructor(private circuitService: CircuitsService) { }
 
   ngOnInit(): void {
-    this.circuitService.getCircuits$()
-      .subscribe();
   }
 }
