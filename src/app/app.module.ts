@@ -19,7 +19,9 @@ import { HardPageComponent } from './components/hard-page/hard-page.component';
 
 import { CircuitsService } from 'src/app/services/circuits.service';
 import { firstValueFrom } from 'rxjs';
+
 import {FormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import {FormsModule} from "@angular/forms";
     MatTableModule,
     BrowserAnimationsModule,
     HttpClientModule,
+  ReactiveFormsModule
   ],
   providers: [
     {
