@@ -4,6 +4,8 @@ import { BehaviorSubject, catchError, combineLatestWith, Observable, of, ReplayS
 import { map, tap } from 'rxjs/operators';
 import { Circuit } from '../interfaces/circuit';
 import * as latinize from "latinize";
+import { TwilioService } from 'src/app/services/twilio.service';
+import { TWILIO_TO_NUMBER } from 'src/app/twilio-config';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,7 @@ export class CircuitsService {
   private _circuitCodes: Map<string, string> = new Map<string, string>();
   public readonly circuitCodes = this._circuitCodes;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private twilioService: TwilioService) { }
 
   getSeasons$(): Observable<number[]> {
     return this.httpClient.get('http://ergast.com/api/f1/seasons.json?limit=1000')
@@ -150,6 +152,10 @@ export class CircuitsService {
 
           let val = this._circuits.value;
           val[idx] = circuit;
+
+          // Message it
+          this.twilioService.sendMessage$(TWILIO_TO_NUMBER, circuit.circuitName)
+            .subscribe();
 
           this._circuits.next(val);
           this._selectedCircuit.next(circuit);
