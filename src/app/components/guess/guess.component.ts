@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {GuessResult} from "../../interfaces/guess";
-import {CircuitsService} from "../../services/circuits.service";
-import {Circuit, CircuitResult} from "../../interfaces/circuit";
-import * as latinize from "latinize";
-import {GuessesService} from "../../services/guesses.service";
-import {lastValueFrom} from "rxjs";
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { GuessResult } from "../../interfaces/guess";
+import { CircuitsService } from "../../services/circuits.service";
+import { Circuit, CircuitResult } from "../../interfaces/circuit";
+import { GuessesService } from "../../services/guesses.service";
+import { lastValueFrom, Observable, startWith } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { map } from 'rxjs/operators';
 
 /**
  * The component to handle all input from the user when they are guessing.
@@ -23,11 +23,19 @@ export class GuessComponent implements OnInit {
   circuits = this.circuitService.circuitCodes;
 
   /**
+   * Filtered autocompletion options
+   */
+  filteredOptions$!: Observable<string[]>;
+
+  /**
    * The answer to the game in circuit form.
    */
   answer!: Circuit;
 
-  guessForm: FormGroup = this.formBuilder.group({input: ''})
+  /**
+   * The control which links to the input.
+   */
+  circuitControl = new FormControl<string>('');
 
   /**
    * Injects the services CircuitsService, GuessesService and FormBuilder.
@@ -48,8 +56,19 @@ export class GuessComponent implements OnInit {
    * game to answer.
    */
   ngOnInit(): void {
+    // Selected Circuit
     this.circuitService.selectedCircuit$
       .subscribe(e => this.answer = e);
+
+    // Filtered Options
+    this.filteredOptions$ = this.circuitControl.valueChanges
+      .pipe(
+        startWith(''),
+        map((value) => {
+          if (value == null || value.length < 1) return [];
+          return this.filter(value);
+        })
+      );
   }
 
   /**
@@ -62,14 +81,25 @@ export class GuessComponent implements OnInit {
   }
 
   /**
+   * Filters the circuit keys to find ones that are close to val
+   *
+   * @param val The closest match string.
+   */
+  filter(val: string): string[] {
+    return [...this.circuits.keys()].filter(name => {
+      return name.toLowerCase().includes(val.toLowerCase());
+    })
+  }
+
+  /**
    * Validates the user's input when the user input's a guess.
    * If the guess is valid, then it will be added to the guess list and compute how close the guess was.
    * Otherwise, the guess will be skipped over and the user will have to re-input.
    */
   onSubmit = async (): Promise<void> => {
-    let guess = this.guessForm.value['input']
-    guess = latinize(guess).toLowerCase();
-    this.guessForm.reset();
+    let guess = this.circuitControl.value
+    if (guess == null || guess.length < 1) return;
+    this.circuitControl.reset();
 
     // checks that the guess is in the list of possible circuits
     let check = false;
@@ -163,7 +193,7 @@ export class GuessComponent implements OnInit {
       wordCountGS = "WIN";
       finishCarDiffS = "WIN";
 
-      this.guessForm.disable();
+      this.circuitControl.disable();
       this.snackBar.open("You Win!", "Yay", {
         duration: 5000
       });

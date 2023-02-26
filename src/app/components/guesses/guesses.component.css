@@ -6,6 +6,11 @@
 
 table {
   min-width: 80%;
+  text-align: center;
+}
+
+.mat-mdc-header-cell, .mat-mdc-cell {
+  text-align: center;
 }
 
 .LOWER {

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {GuessesService} from "../../services/guesses.service";
-import {GuessResult} from "../../interfaces/guess";
+import { Component, OnInit } from '@angular/core';
+import { GuessesService } from "../../services/guesses.service";
+import { GuessResult } from "../../interfaces/guess";
 
 /**
  * Handles the Guess table and its items.
@@ -16,6 +16,9 @@ export class GuessesComponent implements OnInit {
    * The list of guesses.
    */
   guesses!: GuessResult[];
+  /**
+   * The columns to be displayed in the table.
+   */
   displayedColumns: string[] = ['circuit', 'year', 'driver', 'wordCount', 'finishingCars'];
 
   /**

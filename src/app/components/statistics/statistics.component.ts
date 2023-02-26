@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Circuit, CircuitResult} from 'src/app/interfaces/circuit';
-import {CircuitsService} from 'src/app/services/circuits.service';
-import {Observable} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Circuit, CircuitResult } from 'src/app/interfaces/circuit';
+import { CircuitsService } from 'src/app/services/circuits.service';
 
 @Component({
   selector: 'app-statistics',

@@ -1,27 +1,27 @@
-import {NgModule, APP_INITIALIZER} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http'
-import {BrowserModule} from '@angular/platform-browser';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatButtonModule} from "@angular/material/button";
-import {MatTableModule} from '@angular/material/table'
-import {MatInputModule} from "@angular/material/input";
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
+import { BrowserModule } from '@angular/platform-browser';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatButtonModule } from "@angular/material/button";
+import { MatTableModule } from '@angular/material/table'
+import { MatInputModule } from "@angular/material/input";
 
-import {AppComponent} from './app.component';
-import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {StatisticsComponent} from './components/statistics/statistics.component';
-import {GuessComponent} from './components/guess/guess.component';
-import {GuessesComponent} from './components/guesses/guesses.component';
-import {GameComponent} from './components/game/game.component';
-import {AppRoutingModule} from './app-routing.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { GuessComponent } from './components/guess/guess.component';
+import { GuessesComponent } from './components/guesses/guesses.component';
+import { GameComponent } from './components/game/game.component';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {CircuitsService} from 'src/app/services/circuits.service';
-import {firstValueFrom} from 'rxjs';
+import { CircuitsService } from 'src/app/services/circuits.service';
+import { firstValueFrom } from 'rxjs';
 
-import {FormsModule} from "@angular/forms";
-import {ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AboutComponent } from 'src/app/components/about/about.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -35,17 +35,18 @@ import { AboutComponent } from 'src/app/components/about/about.component';
     AboutComponent
   ],
   imports: [
-    FormsModule,
     AppRoutingModule,
     BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     MatSnackBarModule,
     MatTableModule,
+    MatAutocompleteModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-    ReactiveFormsModule
   ],
   providers: [
     {
