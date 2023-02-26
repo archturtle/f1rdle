@@ -21,9 +21,11 @@ import { firstValueFrom } from 'rxjs';
 import {FormsModule} from "@angular/forms";
 import {ReactiveFormsModule} from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {AboutComponent} from "./components/about/about.component";
 
 @NgModule({
   declarations: [
+    AboutComponent,
     AppComponent,
     DashboardComponent,
     StatisticsComponent,

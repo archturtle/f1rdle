@@ -14,7 +14,7 @@
     <!-- Driver Column -->
     <ng-container matColumnDef="driver">
       <th mat-header-cell *matHeaderCellDef> Winning Driver </th>
-      <td mat-cell *matCellDef="let guess"> {{guess.driver.result}} </td>
+      <td mat-cell *matCellDef="let guess" class="{{guess.driver.status}}"> {{guess.driver.result}} </td>
     </ng-container>
 
     <!-- Word Count Column -->

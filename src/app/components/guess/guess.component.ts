@@ -77,7 +77,7 @@ export class GuessComponent implements OnInit {
         check = true;
       }
     }
-      
+
       if (!check) {
         this.snackBar.open("Circuit Does not Exist!", "OK", {
           duration: 2000
@@ -157,13 +157,25 @@ export class GuessComponent implements OnInit {
       finishCarDiffS = "LOWER";
     }
 
+    let driverStatus = "";
+    if(this.answer.circuitName == val.circuitName){
+      yearDiffS = "WIN";
+      driverStatus = "WIN";
+      wordCountGS = "WIN";
+      finishCarDiffS = "WIN";
+
+      this.snackBar.open("You Win!", "Yay", {
+        duration: 5000
+      });
+    }
+
     // Creates the GuessResult and adds it to the guesses list
     let guessCircuit: GuessResult = {
       name: val.circuitName,
       year: {result: yearDiff, status: yearDiffS},
-      driver: {result: val.results[0].driver.givenName + " " + val.results[0].driver.familyName, status: ""},
+      driver: {result: val.results[0].driver.givenName + " " + val.results[0].driver.familyName, status: driverStatus},
       wordCount: {result: wordCountG, status: wordCountGS},
-      finishingCars: {result: finishCarDiff, status: finishCarDiffS}
+      finishingCars: {result: finishCarDiff, status: finishCarDiffS},
     };
 
     this.guessService.addGuesses(guessCircuit);
