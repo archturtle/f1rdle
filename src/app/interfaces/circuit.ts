@@ -1,6 +1,9 @@
-import { Driver } from 'src/app/interfaces/driver';
-import { Constructor } from 'src/app/interfaces/constructor';
+import {Driver} from 'src/app/interfaces/driver';
+import {Constructor} from 'src/app/interfaces/constructor';
 
+/**
+ * The interface for a circuit.
+ */
 export interface Circuit {
   circuitId: string;
   circuitName: string;
@@ -9,6 +12,9 @@ export interface Circuit {
   results: CircuitResult[];
 }
 
+/**
+ * The interface for the Location.
+ */
 export interface Location {
   lat: string;
   long: string;
@@ -21,6 +27,9 @@ export interface Time {
   time: string;
 }
 
+/**
+ * The interface for the circuit result.
+ */
 export interface CircuitResult {
   number: string;
   position: string;

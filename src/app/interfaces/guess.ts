@@ -1,3 +1,6 @@
+/**
+ * The interface for the guess' analysis.
+ */
 export interface GuessResult {
 
   /**

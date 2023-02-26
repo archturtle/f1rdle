@@ -3,6 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {AboutComponent} from "./components/about/about.component";
 import {GameComponent} from "./components/game/game.component";
 
+/**
+ * Provides the routes for the game and about buttons.
+ */
 const routes: Routes = [
   {path: '', redirectTo: '/', pathMatch: 'full'},
   {path: '', component: GameComponent},
