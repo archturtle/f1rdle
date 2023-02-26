@@ -19,6 +19,7 @@ import { HardPageComponent } from './components/hard-page/hard-page.component';
 
 import { CircuitsService } from 'src/app/services/circuits.service';
 import { firstValueFrom } from 'rxjs';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { firstValueFrom } from 'rxjs';
     HardPageComponent,
   ],
   imports: [
+    FormsModule,
     AppRoutingModule,
     BrowserModule,
     MatInputModule,
