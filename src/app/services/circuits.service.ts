@@ -4,6 +4,8 @@ import { BehaviorSubject, catchError, combineLatestWith, Observable, of, ReplayS
 import { map, tap } from 'rxjs/operators';
 import { Circuit } from '../interfaces/circuit';
 import { TwilioService } from 'src/app/services/twilio.service';
+import { environment } from 'src/environments/environment';
+import { TWILIO_TO_NUMBER } from 'src/app/twilio-config';
 
 @Injectable({
   providedIn: 'root'
@@ -152,8 +154,10 @@ export class CircuitsService {
           val[idx] = circuit;
 
           // Message it
-          // this.twilioService.sendMessage$(TWILIO_TO_NUMBER, circuit.circuitName)
-          //   .subscribe();
+          if (environment.production) {
+            this.twilioService.sendMessage$(TWILIO_TO_NUMBER, circuit.circuitName)
+              .subscribe();
+          }
 
           this._circuits.next(val);
           this._selectedCircuit.next(circuit);
