@@ -6,6 +6,7 @@ import {Circuit, CircuitResult} from "../../interfaces/circuit";
 import * as latinize from "latinize";
 import {GuessesService} from "../../services/guesses.service";
 import {lastValueFrom} from "rxjs";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -19,7 +20,10 @@ export class GuessComponent implements OnInit {
     answer!: Circuit;
     guessForm: FormGroup = this.formBuilder.group({ input: '' })
 
-    constructor(private formBuilder: FormBuilder, private circuitService: CircuitsService, private guessService: GuessesService) { }
+    constructor(private formBuilder: FormBuilder,
+                private circuitService: CircuitsService,
+                private guessService: GuessesService,
+                private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
       this.circuitService.selectedCircuit$
@@ -41,8 +45,22 @@ export class GuessComponent implements OnInit {
           check = true;
         }
       }
-      if (!check) return;
-      if (this.guessService.hasCircuit(guess)) return;
+
+      if (!check) {
+        this.snackBar.open("Circuit Does not Exist!", "OK", {
+          duration: 2000
+        });
+
+        return;
+      }
+
+      if (this.guessService.hasCircuit(guess)) {
+        this.snackBar.open("You have already guess this!", "OK", {
+          duration: 2000
+        });
+
+        return;
+      }
 
       let season = this.answer.season;
       let val: Circuit | null = await lastValueFrom(
@@ -59,8 +77,6 @@ export class GuessComponent implements OnInit {
           )
         )
       }
-
-      console.log(val);
 
       let yearDiff: string;
       let yearDiffS: string;

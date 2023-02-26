@@ -19,6 +19,7 @@ import { firstValueFrom } from 'rxjs';
 
 import {FormsModule} from "@angular/forms";
 import {ReactiveFormsModule} from "@angular/forms";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -35,10 +36,11 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatSnackBarModule,
     MatTableModule,
     BrowserAnimationsModule,
     HttpClientModule,
-  ReactiveFormsModule
+    ReactiveFormsModule
   ],
   providers: [
     {
