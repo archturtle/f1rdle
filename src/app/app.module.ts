@@ -50,7 +50,8 @@ import {FormsModule} from "@angular/forms";
         let seasonList = await firstValueFrom(circuitsService.getSeasons$());
         let season = seasonList[Math.floor(Math.random() * seasonList.length)];
 
-        await firstValueFrom(circuitsService.getCircuits$(season));
+        await firstValueFrom(circuitsService.getCircuitCodes$())
+        await firstValueFrom(circuitsService.getCircuitsPerSeason$(season));
         await firstValueFrom(circuitsService.chooseRandomCircuit$())
       },
       deps: [CircuitsService]

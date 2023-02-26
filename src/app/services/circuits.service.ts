@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject, zip } from 'rxjs';
-import { tap, map, mergeMap } from 'rxjs/operators'
-import { Circuit, CircuitResult } from '../interfaces/circuit';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, catchError, combineLatestWith, Observable, of, ReplaySubject, retry } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Circuit } from '../interfaces/circuit';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CircuitsService {
+  // The circuits
   private _circuits: BehaviorSubject<Circuit[]> = new BehaviorSubject<Circuit[]>([]);
   public readonly circuits$: Observable<Circuit[]> = this._circuits.asObservable();
 
+  // The selected circuit
   private _selectedCircuit: ReplaySubject<Circuit> = new ReplaySubject<Circuit>(1);
   public readonly selectedCircuit$: Observable<Circuit> = this._selectedCircuit.asObservable();
 
+  // Circuit names
+  private _circuitCodes: Map<string, string> = new Map<string, string>();
+  public readonly circuitCodes = this._circuitCodes;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -25,7 +30,62 @@ export class CircuitsService {
       );
   }
 
-  getCircuits$(season: number): Observable<Circuit[]> {
+  getCircuitCodes$(): Observable<void> {
+    return this.httpClient.get('http://ergast.com/api/f1/circuits.json?limit=1000')
+      .pipe(
+        map((result: any): any[] => result["MRData"]["CircuitTable"]["Circuits"]),
+        map((result: any) => result.map((r: any) => {
+          this._circuitCodes.set(r["circuitName"], r["circuitId"]);
+        })),
+      )
+  }
+
+  getCircuitByCode$(code: string, season: number): Observable<Circuit | null> {
+    let response: Observable<Circuit> = this.httpClient.get(`http://ergast.com/api/f1/${season}/circuits/${code}.json`)
+      .pipe(
+        map((result: any) => {
+          let arr = result["MRData"]["CircuitTable"]["Circuits"];
+          return arr[0];
+        }),
+      );
+
+    return this.httpClient.get(`http://ergast.com/api/f1/${season}/circuits/${code}/results.json`)
+      .pipe(
+        map((result: any) => {
+          let res = result["MRData"]["RaceTable"]["Races"]
+          if (res.length == 0) throw "error to exit pipe"
+
+          return res[0]["Results"].map((r: any) => {
+            return {
+              number: r["number"],
+              position: r["position"],
+              positionText: r["positionText"],
+              driver: {
+                driverId: r["Driver"]["driverId"],
+                code: r["Driver"]["code"],
+                givenName: r["Driver"]["givenName"],
+                familyName: r["Driver"]["familyName"],
+                dateOfBirth: r["Driver"]["dateOfBirth"],
+                nationality: r["Driver"]["nationality"]
+              },
+              constructor: {
+                constructorId: r["Constructor"]["constructorId"],
+                name: r["Constructor"]["name"],
+                nationality: r["Constructor"]["nationality"]
+              }
+            }
+          })
+        }),
+        combineLatestWith(response),
+        map(([e1, e2]) => {
+          e2.results = e1;
+          return e1;
+        }),
+        catchError(() => of(null))
+      );
+  }
+
+  getCircuitsPerSeason$(season: number): Observable<Circuit[]> {
     // http://ergast.com/api/f1/2001/circuits.json
     return this.httpClient.get(`http://ergast.com/api/f1/${season}/circuits.json?limit=1000`)
       .pipe(
@@ -46,7 +106,6 @@ export class CircuitsService {
             }
           })
         }),
-        tap(console.log),
         tap({
           next: (value: Circuit[]) => {
             this._circuits.next(value);
