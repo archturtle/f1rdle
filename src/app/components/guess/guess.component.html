@@ -1,12 +1,11 @@
-<form class="example-form">
+<form [formGroup]="guessForm" (ngSubmit)="onSubmit()" class="example-form">
   <div class = "guessField">
     <mat-form-field class="example-full-width">
       <h3 class='label'>Circuit Guess</h3>
       <div>
-        <input matInput placeholder="Circuit" value="">
-        <button mat-flat-button color="primary">Submit</button>
+        <input matInput placeholder="Circuit" value="" formControlName="input">
+        <button mat-flat-button color="primary" type="submit">Submit</button>
       </div>
     </mat-form-field>
   </div>
 </form>
-

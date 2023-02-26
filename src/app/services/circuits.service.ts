@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, combineLatestWith, Observable, of, ReplaySubject, retry } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Circuit } from '../interfaces/circuit';
+import * as latinize from "latinize";
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class CircuitsService {
       .pipe(
         map((result: any): any[] => result["MRData"]["CircuitTable"]["Circuits"]),
         map((result: any) => result.map((r: any) => {
-          this._circuitCodes.set(r["circuitName"], r["circuitId"]);
+          this._circuitCodes.set(latinize(r["circuitName"]).toLowerCase(), r["circuitId"]);
         })),
       )
   }
@@ -79,7 +80,8 @@ export class CircuitsService {
         combineLatestWith(response),
         map(([e1, e2]) => {
           e2.results = e1;
-          return e1;
+          e2.season = season;
+          return e2;
         }),
         catchError(() => of(null))
       );

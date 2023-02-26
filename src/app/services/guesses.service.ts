@@ -7,43 +7,21 @@ import { GuessResult} from "../interfaces/guess";
   providedIn: 'root'
 })
 export class GuessesService {
-  private _guesses: BehaviorSubject<GuessResult[]> = new BehaviorSubject<GuessResult[]>([
-    {
-      name: 'Monza',
-      year: {
-        result: "2043",
-        status: "HIGHER"
-      },
-      driver: {
-        result: "Alex Albon",
-        status: "EQUAL"
-      },
-      wordCount: {
-        result: "3",
-        status: "LOWER"
-      },
-      finishingCars: {
-        result: "4",
-        status: "HIGHER"
-      }
-    }
-  ]);
+  private _guesses: BehaviorSubject<GuessResult[]> = new BehaviorSubject<GuessResult[]>([]);
   public readonly guesses$: Observable<GuessResult[]> = this._guesses.asObservable();
 
   constructor() { }
 
   addGuesses(guess: GuessResult): boolean {
     if (this._guesses.value.filter(value => {
-      return value.name == guess.name &&
-        value.year.result == guess.year.result &&
-        value.driver.result == guess.driver.result &&
-        value.wordCount.result == guess.wordCount.result &&
-        value.finishingCars.result == guess.finishingCars.result;
+      return value.name == guess.name
     }).length != 0) return false;
 
     this._guesses.next([...this._guesses.value, guess]);
     return true;
   }
 
-
+  hasCircuit(name: string): boolean {
+    return this._guesses.value.filter(item => item.name == name).length != 0;
+  }
 }
