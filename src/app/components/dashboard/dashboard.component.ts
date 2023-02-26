@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 /**
  * Displays the two buttons for displaying the game and the about page.
@@ -8,4 +8,4 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent{ }
+export class DashboardComponent { }

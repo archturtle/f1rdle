@@ -22,7 +22,8 @@ export class GuessesComponent implements OnInit {
    * Injects the service GuessesService.
    * @param guessService: the guesses service.
    */
-  constructor(private guessService: GuessesService) { }
+  constructor(private guessService: GuessesService) {
+  }
 
   /**
    * When the component is initialized, it will subscribe to the guess service and set the list of the circuits
