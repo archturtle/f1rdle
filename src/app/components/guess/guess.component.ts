@@ -163,6 +163,7 @@ export class GuessComponent implements OnInit {
       wordCountGS = "WIN";
       finishCarDiffS = "WIN";
 
+      this.guessForm.disable();
       this.snackBar.open("You Win!", "Yay", {
         duration: 5000
       });
