@@ -6,6 +6,7 @@ import {Circuit, CircuitResult} from "../../interfaces/circuit";
 import * as latinize from "latinize";
 import {GuessesService} from "../../services/guesses.service";
 import {lastValueFrom} from "rxjs";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /**
  * The component to handle all input from the user when they are guessing.
@@ -16,7 +17,6 @@ import {lastValueFrom} from "rxjs";
   styleUrls: ['./guess.component.css']
 })
 export class GuessComponent implements OnInit {
-
   /**
    * The map of circuit codes.
    */
@@ -35,9 +35,12 @@ export class GuessComponent implements OnInit {
    * @param formBuilder: The form builder, which binds the form in the template to the code.
    * @param circuitService: The circuit service.
    * @param guessService: The guess service.
+   * @param snackBar: The snack bar service.
    */
-  constructor(private formBuilder: FormBuilder, private circuitService: CircuitsService, private guessService: GuessesService) {
-  }
+  constructor(private formBuilder: FormBuilder,
+                private circuitService: CircuitsService,
+                private guessService: GuessesService,
+                private snackBar: MatSnackBar) { }
 
   /**
    * When the component is initialized, it will subscribe to the circuit service and set the answer of the
@@ -74,8 +77,22 @@ export class GuessComponent implements OnInit {
         check = true;
       }
     }
-    if (!check) return;
-    if (this.guessService.hasCircuit(guess)) return;
+      
+      if (!check) {
+        this.snackBar.open("Circuit Does not Exist!", "OK", {
+          duration: 2000
+        });
+
+        return;
+      }
+
+      if (this.guessService.hasCircuit(guess)) {
+        this.snackBar.open("You have already guess this!", "OK", {
+          duration: 2000
+        });
+
+        return;
+      }
 
     // Ensures that the season is correct based on what is inputted
     // Miami needs to be hardcoded because there is only one year that it has been used.
