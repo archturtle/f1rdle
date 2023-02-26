@@ -1,4 +1,4 @@
-<ng-container *ngIf="selectedCircuit">
+<div class="hints" *ngIf="selectedCircuit">
   <button mat-flat-button disableRipple>
     SZN: {{ selectedCircuit.season }}
   </button>
@@ -11,4 +11,4 @@
   <button mat-flat-button disableRipple>
     FIN: {{ computeNumberWon(selectedCircuit.results) }}
   </button>
-</ng-container>
+</div>

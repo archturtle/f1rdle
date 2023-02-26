@@ -1,6 +1,23 @@
 .header {
-  padding: 1px;
-  text-align: center;
-  color: black;
-  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.f1Logo {
+  width: 100px;
+}
+
+.rdle {
+  color: #FF1801;
+  margin-top: 3px;
+  margin-bottom: 0;
+  letter-spacing: 3px;
+  font-size: 35px;
+  font-weight: 900;
+  transform: scale(1) rotate(0deg) translate(0px, 0px) skew(-40deg, 0deg);;
+}
+
+:host {
+  width: 100%;
 }

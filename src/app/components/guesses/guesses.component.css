@@ -1,48 +1,10 @@
-.table {
-  width: 100%;
+:host {
+  display: flex;
+  justify-content: center;
 }
 
-.mat-column-position {
-  width: 32px;
-  border-left: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  padding-right: 24px;
-  text-align: center;
-}
-
-.mat-column-circuit {
-  width: 32px;
-  padding-left: 16px;
-  font-size: 20px;
-  border-right: 1px solid currentColor;
-}
-
-.mat-column-year {
-  width: 32px;
-  text-align: center;
-  font-weight: bold;
-  border-right: 1px solid currentColor;
-}
-
-.mat-column-driver {
-  width: 32px;
-  text-align: center;
-  font-weight: bold;
-  border-right: 1px solid currentColor;
-}
-
-.mat-column-wordCount {
-  width: 32px;
-  text-align: center;
-  font-weight: bold;
-  border-right: 1px solid currentColor;
-}
-
-.mat-column-finishingCars {
-  width: 32px;
-  text-align: center;
-  font-weight: bold;
-  border-right: 1px solid currentColor;
+table {
+  min-width: 80%;
 }
 
 .LOWER {
