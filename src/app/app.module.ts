@@ -21,7 +21,7 @@ import {firstValueFrom} from 'rxjs';
 import {FormsModule} from "@angular/forms";
 import {ReactiveFormsModule} from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {AboutComponent} from "./components/about/about.component";
+import { AboutComponent } from 'src/app/components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +32,7 @@ import {AboutComponent} from "./components/about/about.component";
     GuessComponent,
     GuessesComponent,
     GameComponent,
+    AboutComponent
   ],
   imports: [
     FormsModule,
