@@ -11,6 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { GuessComponent } from './components/guess/guess.component';
 import { GuessesComponent } from './components/guesses/guesses.component';
+import { GameComponent } from './components/game/game.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -28,6 +29,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     StatisticsComponent,
     GuessComponent,
     GuessesComponent,
+    GameComponent,
   ],
   imports: [
     FormsModule,
