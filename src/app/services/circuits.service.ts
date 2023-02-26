@@ -154,8 +154,8 @@ export class CircuitsService {
           val[idx] = circuit;
 
           // Message it
-          this.twilioService.sendMessage$(TWILIO_TO_NUMBER, circuit.circuitName)
-            .subscribe();
+          // this.twilioService.sendMessage$(TWILIO_TO_NUMBER, circuit.circuitName)
+          //   .subscribe();
 
           this._circuits.next(val);
           this._selectedCircuit.next(circuit);
