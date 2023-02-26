@@ -38,9 +38,17 @@
   border-right: 1px solid currentColor;
 }
 
-.mat-column-dnfs {
+.mat-column-finishingCars {
   width: 32px;
   text-align: center;
   font-weight: bold;
   border-right: 1px solid currentColor;
+}
+
+.LOWER {
+  background-color: #c4392f;
+}
+
+.HIGHER {
+  background-color: #1cb3c7;
 }

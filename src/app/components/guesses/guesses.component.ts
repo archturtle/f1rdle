@@ -1,17 +1,6 @@
-import {Component} from '@angular/core';
-
-export interface CircuitGuesses {
-  position: number;
-  circuit: string;
-  year: string;
-  driver: string;
-  wordCount: string;
-  dnfs: string;
-}
-
-const GUESSES_DATA: CircuitGuesses[] = [
-  {position: 1, circuit: 'Monaco', year: '2022', driver: 'PER', wordCount: '3', dnfs: '3'},
-];
+import {Component, OnInit} from '@angular/core';
+import {GuessesService} from "../../services/guesses.service";
+import {GuessResult} from "../../interfaces/guess";
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -21,7 +10,15 @@ const GUESSES_DATA: CircuitGuesses[] = [
   styleUrls: ['guesses.component.css'],
   templateUrl: 'guesses.component.html',
 })
-export class GuessesComponent {
-  displayedColumns: string[] = ['position', 'circuit', 'year', 'driver', 'wordCount', 'dnfs'];
-  dataSource = GUESSES_DATA;
+export class GuessesComponent implements OnInit {
+
+  guesses!: GuessResult[];
+  displayedColumns: string[] = ['circuit', 'year', 'driver', 'wordCount', 'finishingCars'];
+
+  constructor(private guessService: GuessesService) { }
+
+  ngOnInit() {
+    this.guessService.guesses$
+      .subscribe(e => this.guesses = e)
+  }
 }
